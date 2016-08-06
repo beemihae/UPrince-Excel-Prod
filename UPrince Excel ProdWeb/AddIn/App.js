@@ -498,8 +498,8 @@ var app = (function () {
         });
 
         $(document).on("click", "#Publish", function () {
-            publishRiskRegister();
-            publishProductDescription();
+            //publishRiskRegister();
+            //publishProductDescription();
             publishDailyLog();
         });
 
@@ -562,7 +562,8 @@ var app = (function () {
 
     //if date is given as a regular date yyyy-mm-ddT..
     function formatDate(date) {
-        if (date == null) { return '' }
+        if (date == null || date == "") { return '' }
+            //app.showNotification();
         else return date.substring(0, 10);
     }
 
@@ -581,7 +582,7 @@ var app = (function () {
     };
 
     function formatDate3(date) {
-        if (date == null) return '';
+        if (date == null || date == 0) return null;
         else return new Date((date - (25567 + 2)) * 86400 * 1000)
     };
 
@@ -882,7 +883,7 @@ var app = (function () {
                 //console.log(tableDataRange.address);
                 var range = tableDataRange.address;
                 var rangeAddress = range.substring(range.indexOf('!') + 1);
-                app.showNotification(rangeAddress);
+                //app.showNotification(rangeAddress);
                 localStorage.setItem('rangeAddress', rangeAddress);
                 var sheetName = range.substring(0, range.indexOf('!'));
                 localStorage.setItem('sheetName', sheetName);
@@ -1328,6 +1329,7 @@ var app = (function () {
         })
             .done(function (str) {
                 //app.showNotification(str.dailyLogListViewModel.length);
+                //getDailyLog(str.dailyLogListViewModel[1].identifier);
                 var DlId = [str.dailyLogListViewModel.length];
                 if (str.dailyLogListViewModel.length > 0) {
                     var matrix = [str.dailyLogListViewModel.length];
@@ -1368,12 +1370,13 @@ var app = (function () {
                          showMessage(JSON.stringify(error));
                      });
                 });
-                getDailyLog(projectId, DlId[0]);
+                getDailyLog(str.dailyLogListViewModel[0].identifier);
+
 
             });
     };
 
-    function getDailyLog(projectId, dailyLogId) {
+    function getDailyLog(dailyLogId) {
         var urlProject = host + '/api/DailyLog/GetDailyLog?logId=' + dailyLogId + '&email=' + localStorage.getItem("email");
         $.ajax({
             type: 'GET',
@@ -1386,18 +1389,25 @@ var app = (function () {
              //app.showNotification(str.impact[0].State);
              Excel.run(function (ctx) {
                  //var matrix = riskValuesImpact(str);
-                 ctx.workbook.worksheets.getItem('Values').getRange("G1:G" + Object.keys(str.contextList).length).values = dailyLogContext(str)/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
-                 ctx.workbook.worksheets.getItem('Values').getRange("I1:I" + Object.keys(str.personnelContacts).length).values = dailyLogUsers(str)/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 if (Object.keys(str.contextList).length != 0) {
+                     ctx.workbook.worksheets.getItem('Values').getRange("G1:G" + Object.keys(str.contextList).length).values = dailyLogContext(str)/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 }
+                 if (Object.keys(str.personnelContacts).length != 0) {
+                     ctx.workbook.worksheets.getItem('Values').getRange("I1:I" + Object.keys(str.personnelContacts).length).values = dailyLogUsers(str)
+                 }
                  ctx.workbook.worksheets.getItem('Values').getRange("H1:H6").values = [["Inbox"], ["Next"], ["Waiting"], ["Schedule"], ["Someday"], ["Done"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                  ctx.workbook.worksheets.getItem('Values').getRange("J1:J6").values = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                  ctx.workbook.worksheets.getItem('Values').getRange("K1:K7").values = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                  ctx.workbook.worksheets.getItem('Values').getRange("L1:L5").values = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
-                 ctx.workbook.worksheets.getItem('Values').getRange("M1:M" + Object.keys(str.project).length).values = dailyLogProject(str);
+                 if (Object.keys(str.project).length != 0) {
+                     ctx.workbook.worksheets.getItem('Values').getRange("M1:M" + Object.keys(str.project).length).values = dailyLogProject(str);
+                 }
+
                  return ctx.sync().then(function () {
                      //console.log("Success! Insert range in A1:C3.");
                  });;
              }).catch(function (error) {
-                 console.log(error);
+                 //app.showNotification(error);
              });
          })
     };
@@ -1419,7 +1429,7 @@ var app = (function () {
         for (var i = 0; i < Object.keys(str.personnelContacts).length; i++) {
             val[i] = [1];
             val[i][0] = str.personnelContacts[i].State;
-            localStorage.setItem('dailyLogUsers' + str.personnelContacts[i].State, "" + str.personnelContacts[i].Index);
+            localStorage.setItem('dailyLogUsers' + str.personnelContacts[i].State, "" + str.personnelContacts[i].StateId);
             //val[i] = str.impact[i].State;
         }
         //app.showNotification(val[2][0]);
@@ -1431,12 +1441,11 @@ var app = (function () {
         for (var i = 0; i < Object.keys(str.project).length; i++) {
             val[i] = [1];
             val[i][0] = str.project[i].State;
-            localStorage.setItem('dailyLogProject' + str.project[i].State, "" + str.project[i].Index);
-            //val[i] = str.impact[i].State;
+            localStorage.setItem('dailyLogProject' + str.project[i].State, "" + str.project[i].StateId);
         }
-        //app.showNotification(val[2][0]);
         return val;
     }
+
     function publishDailyLog() {
         Excel.run(function (ctx) {
             var rows = ctx.workbook.tables.getItem("DailyLog").rows.load("values");
@@ -1448,40 +1457,84 @@ var app = (function () {
                     var urlProject2 = host + '/api/DailyLog/PostDailyLogInvolvedTiming';
                     for (var i = 0; i < rows.items.length; i++) {
                         //app.showNotification(rows.items[1].values[0][1]);
-                        var dataEmail = {
-                            "id": rows.items[i].values[0][2],
-                            "projectId": localStorage.getItem("dailyLogProject" + rows.items[i].values[0][0]),
-                            "activityTypeId": isDailyLogType(rows.items[i].values[0][8]),
-                            "title": isNull(rows.items[i].values[0][1]),
-                            "order": "0",
-                            "coreUserEmail": "",
-                            "author": "UPrince",
-                            "authorEmail": localStorage.getItem("email"),
-                            "context": localStorage.getItem("dailyLogContext" + rows.items[i].values[0][2]),
-                            "energy": isEnergy(rows.items[i].values[0][10])
+                        if (rows.items[i].values[0][2] == null) {
+                            var dataEmail = {
+                                "id": rows.items[i].values[0][2],
+                                "projectId": localStorage.getItem("dailyLogProject" + rows.items[i].values[0][0]),
+                                "activityTypeId": isActivityType(rows.items[i].values[0][7]),
+                                "title": isNull(rows.items[i].values[0][1]),
+                                "order": "0",
+                                "coreUserEmail": localStorage.getItem("email"),
+                                "authorEmail": localStorage.getItem("email"),
+                                "context": localStorage.getItem("dailyLogContext" + rows.items[i].values[0][3]),
+                                "energy": isEnergy(rows.items[i].values[0][9])
+                            };
+                            $.ajax({
+                                type: "POST",
+                                url: urlProject,
+                                dataType: "json",
+                                async: false,
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(dataEmail),
+                            })
+                            .done(function (result) {
+                                var dataEmail2 = {
+                                    "dailyLogId": result,
+                                    "responsible": localStorage.getItem('dailyLogUsers' + rows.items[i].values[0][6]),
+                                    "responseStatus": isResponseStatus(rows.items[i].values[0][5]),
+                                    "targetDate": formatDate3(rows.items[i].values[0][4]),
+                                    "time": isTime(rows.items[i].values[0][8])
+                                };
+                                $.ajax({
+                                    type: "POST",
+                                    url: urlProject2,
+                                    dataType: "json",
+                                    contentType: "application/json; charset=utf-8",
+                                    data: JSON.stringify(dataEmail2),
+                                });
+                            })
+                        }
+                        else {
+                            var dataEmail = {
+                                "id": rows.items[i].values[0][2],
+                                "projectId": localStorage.getItem("dailyLogProject" + rows.items[i].values[0][0]),
+                                "activityTypeId": isActivityType(rows.items[i].values[0][7]),
+                                "title": isNull(rows.items[i].values[0][1]),
+                                "order": "0",
+                                "coreUserEmail": localStorage.getItem("email"),
+                                "authorEmail": localStorage.getItem("email"),
+                                "context": localStorage.getItem("dailyLogContext" + rows.items[i].values[0][3]),
+                                "energy": isEnergy(rows.items[i].values[0][9])
+                            };
+                            $.ajax({
+                                type: "POST",
+                                url: urlProject,
+                                dataType: "json",
+                                async: false,
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(dataEmail),
+                            })
+                            var dataEmail2 = {
+                                "dailyLogId": rows.items[i].values[0][2],
+                                "responsible": localStorage.getItem('dailyLogUsers' + rows.items[i].values[0][6]),
+                                "responseStatus": isResponseStatus(rows.items[i].values[0][5]),
+                                "targetDate": formatDate3(rows.items[i].values[0][4]),
+                                "time": isTime(rows.items[i].values[0][8])
+                            };
+                            $.ajax({
+                                type: "POST",
+                                url: urlProject2,
+                                dataType: "json",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify(dataEmail2),
+                            });
                         };
-                        $.ajax({
-                            type: "POST",
-                            url: urlProject,
-                            dataType: "json",
-                            contentType: "application/json; charset=utf-8",
-                            data: JSON.stringify(dataEmail),
-                        });
-                        var dailyLogId = rows.items[i].values[0][1];
-                        var responsible = localStorage.getItem('dailyLogUsers' + rows.items[i].values[0][6]);
-                        var responseStatus = isResponseStatus(rows.items[i].values[0][7]);
-                        var requester = localStorage.getItem('dailyLogUsers' + rows.items[i].values[0][7]);
-                        var startDate = rows.items[i].values[0][3];
-                        var targetDate = (rows.items[i].values[0][4]);
-                        var time = isTime(rows.items[i].values[0][10]);
-                        var dataEmail2 = {
-                            "dailyLogId": rows.items[i].values[0][1],
+                        /*var dataEmail2 = {
+                            "dailyLogId": rows.items[i].values[0][2],
                             "responsible": localStorage.getItem('dailyLogUsers' + rows.items[i].values[0][6]),
-                            "responseStatus": isResponseStatus(rows.items[i].values[0][7]),
-                            "requester": localStorage.getItem('dailyLogUsers' + rows.items[i].values[0][7]),
-                            "startDate": formatDate3(rows.items[i].values[0][3]),
+                            "responseStatus": isResponseStatus(rows.items[i].values[0][5]),
                             "targetDate": formatDate3(rows.items[i].values[0][4]),
-                            "time": isTime(rows.items[i].values[0][10])
+                            "time": isTime(rows.items[i].values[0][8])
                         };
                         $.ajax({
                             type: "POST",
@@ -1489,8 +1542,7 @@ var app = (function () {
                             dataType: "json",
                             contentType: "application/json; charset=utf-8",
                             data: JSON.stringify(dataEmail2),
-                        });
-
+                        });*/
                     }
                 })
                 .then(ctx.sync)
@@ -1500,44 +1552,47 @@ var app = (function () {
         }).catch(function (error) {
             console.log(error);
         });
-
-
     };
 
-    function isDailyLogType(type) {
+    function isActivityType(type) {
         if (type == "Problem") return "0";
         else if (type == "Action") return "1";
         else if (type == "Event") return "2";
         else if (type == "Comment") return "3";
         else if (type == "Decision") return "4";
-        else return "5";
-    };
+        else if (type == "Reference") return "5";
+        else return null
+    }
 
     function isEnergy(type) {
         if (type == "Mild") return "0";
         else if (type == "Reasonable") return "1";
         else if (type == "Demanding") return "2";
         else if (type == "Very Demanding") return "3";
-        else return "5";
+        else if (type == "Extreme") return "4";
+        else return null;
     };
 
     function isTime(type) {
-        if (type = "5 min") return "0";
-        else if (type = "15 min") return "1";
-        else if (type = "30 min") return "2";
-        else if (type = "1 hr") return "3";
-        else if (type = "2 hr") return "4";
-        else if (type = "4 hr") return "5";
-        else return "6";
+        if (type == "5 min") return "0";
+        else if (type == "15 min") return "1";
+        else if (type == "30 min") return "2";
+        else if (type == "1 hr") return "3";
+        else if (type == "2 hr") return "4";
+        else if (type == "4 hr") return "5";
+        else if (type == "8 hr") return "6";
+        else return null;
     };
 
     function isResponseStatus(type) {
-        if (type = "Problem") return "0";
-        else if (type = "Action") return "1";
-        else if (type = "Event") return "2";
-        else if (type = "Comment") return "3";
-        else if (type = "Decision") return "4";
-        else return "5";
+        if (type == "Inbox") return "0";
+        else if (type == "Next") return "1";
+        else if (type == "Waiting") return "2";
+        else if (type == "Schedule") return "3";
+        else if (type == "Someday") return "4";
+        else if (type == "Done") return "5";
+        else return null;
     };
+
     return app;
 })();
