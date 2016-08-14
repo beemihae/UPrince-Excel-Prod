@@ -416,7 +416,7 @@ var app = (function () {
                  if (Object.keys(str.project).length != 0) {
                      ctx.workbook.worksheets.getItem('Values').getRange("M1:M" + Object.keys(str.project).length).values = dailyLogProject(str);
                  }
-
+                 
                  return ctx.sync().then(function () {
                      //console.log("Success! Insert range in A1:C3.");
                  });
@@ -460,7 +460,7 @@ var app = (function () {
         }
         //app.showNotification(val[2][0]);
         return val;
-    }
+    } 
 
     function publishDailyLog() {
         Excel.run(function (ctx) {
