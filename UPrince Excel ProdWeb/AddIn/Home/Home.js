@@ -18,14 +18,14 @@
             //after log in go to project page, clicking sign in button
             $(document).on("click", "#btnSignIn", function () {
                 if ((navigator.userAgent.indexOf('iPad') != -1) /*|| !(Office.context.requirements.isSetSupported('HtmlCoercion'))*/) { //iPad
-                    var child = window.open("https://plaza.uprince.com/oauth2/authorize?client_id=thoa4iaGh9aidei8aeb9AiyeesohghaicieGipua6jie1Sai6AiquiegheiZowah&scope=profile&state=CSFR&response_type=token&redirect_uri=https%3A%2F%2Fuprinceexcelprod.azurewebsites.net%2Faddin%2Fhome%2Fhome.html", "");
+                    var child = window.open("https://plaza.uprince.com/oauth2/authorize?client_id=thoa4iaGh9aidei8aeb9AiyeesohghaicieGipua6jie1Sai6AiquiegheiZowah&scope=profile&state=CSFR&response_type=token&redirect_uri=https%3A%2F%2Fspreadsheet.uprince.com%2Faddin%2Fhome%2Fhome.html", "");
                     //window.location.href = "https://uprince-dev.pronovix.net/oauth2/authorize?client_id=thoa4iaGh9aidei8aeb9AiyeesohghaicieGipua6jie1Sai6AiquiegheiZowah&scope=profile&state=CSFR&response_type=token&redirect_uri=https%3A%2F%2Fuprinceexcelprod.azurewebsites.net%2F1.1%2Fhome%2Fios.html"
 
                     //app.showNotification(navigator.userAgent);
                     //var child = window.open("http://www.w3schools.com/jsref/prop_nav_useragent.asp");
                     var timer = setInterval(checkChild, 500);
                 } else {
-                    window.location.href = "https://plaza.uprince.com/oauth2/authorize?client_id=thoa4iaGh9aidei8aeb9AiyeesohghaicieGipua6jie1Sai6AiquiegheiZowah&scope=profile&state=CSFR&response_type=token&redirect_uri=https%3A%2F%2Fuprinceexcelprod.azurewebsites.net%2Faddin%2Fhome%2Fhome.html"
+                    window.location.href = "https://plaza.uprince.com/oauth2/authorize?client_id=thoa4iaGh9aidei8aeb9AiyeesohghaicieGipua6jie1Sai6AiquiegheiZowah&scope=profile&state=CSFR&response_type=token&redirect_uri=https%3A%2F%2Fspreadsheet.uprince.com%2Faddin%2Fhome%2Fhome.html"
                     //var child = window.open("https://uprince-dev.pronovix.net/oauth2/authorize?client_id=thoa4iaGh9aidei8aeb9AiyeesohghaicieGipua6jie1Sai6AiquiegheiZowah&scope=profile&state=CSFR&response_type=token&redirect_uri=https%3A%2F%2Fuprinceexcelprod.azurewebsites.net%2Faddin%2Fhome%2Fhome.html", "");
 
                     //app.showNotification(navigator.userAgent);

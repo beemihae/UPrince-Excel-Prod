@@ -113,6 +113,36 @@
                     <SourceLocation resid="UPrince.Taskpane1.Url" />
                   </Action>
                 </Control>
+<Control xsi:type="Button" id="Contoso.Button2Id1">
+                  <Label resid="residLabel3" />
+                  <Supertip>
+                    <Title resid="residLabel4" />
+                    <Description resid="residToolTip" />
+                  </Supertip>
+                  <Icon>
+                         <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>refresh</FunctionName>
+                  </Action>
+                </Control>
+              <Control xsi:type="Button" id="Contoso.Button1Id1">
+                  <Label resid="residLabel5" />
+                  <Supertip>
+                    <Title resid="residLabel6" />
+                    <Description resid="residToolTip" />
+                  </Supertip>
+                  <Icon>
+                     <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>commit</FunctionName>
+                  </Action>
+                </Control>
                 <!-- Menu example -->
                 
 
@@ -136,9 +166,14 @@
         <bt:Image id="UPrince.TaskpaneButton.Icon.16" DefaultValue="https://document.uprince.com/Images/ico_uprince_16.png" />
         <bt:Image id="UPrince.TaskpaneButton.Icon.32" DefaultValue="https://document.uprince.com/Images/ico_uprince_32.png" />
         <bt:Image id="UPrince.TaskpaneButton.Icon.80" DefaultValue="https://document.uprince.com/Images/ico_uprince_80.png" />
+        <bt:Image id="UPrince.TaskpaneButton.Icon" DefaultValue="https://i.imgur.com/FkSShX9.png" />
+        <bt:Image id="UPrince.FunctionButton.Icon" DefaultValue="https://i.imgur.com/qDujiX0.png" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="UPrince.FunctionFile.Url" DefaultValue="https://spreadsheet.uprince.com/addin/home/functionfile.html" />
+        <bt:Url id="residDesktopFuncUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/FunctionFile.html">
+          <bt:Override Locale="ja-jp" Value="https://spreadsheet.uprince.com/addin/home/home.html" />
+        </bt:Url>
+        <bt:Url id="UPrince.FunctionFile.Url" DefaultValue="https://commandsimple.azurewebsites.net/FunctionFile.html" />
         <bt:Url id="UPrince.Taskpane1.Url" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html" />
         <bt:Url id="UPrince.Taskpane2.Url" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html" />
         <!--LearnMore URL currently not used -->
@@ -146,20 +181,52 @@
       </bt:Urls>
       <bt:ShortStrings>
         <!-- ShortStrings max characters==125 -->
-       <bt:String id="UPrince.GetStarted.Title" DefaultValue="UPrince Loaded Successfully">
+        <bt:String id="residLabel" DefaultValue="Get Data">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="residLabel2" DefaultValue="Save Data">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+      
+ <bt:String id="residLabel3" DefaultValue="Refresh">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="residLabel4" DefaultValue="Projects">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="residLabel5" DefaultValue="Commit">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="residLabel6" DefaultValue="Commit">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="UPrince.GetStarted.Title" DefaultValue="UPrince Loaded Successfully">
           <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
         </bt:String>
-        <bt:String id="UPrince.TaskpaneButton.Label" DefaultValue="Load" />
+        <bt:String id="UPrince.FunctionButton.Label" DefaultValue="Execute Function" />
+        <bt:String id="UPrince.TaskpaneButton.Label" DefaultValue="Login" />
         <bt:String id="UPrince.Tab1.GroupLabel" DefaultValue="GTD" />
         <bt:String id="UPrince.Tab1.TabLabel" DefaultValue="UPrince" />
+        <bt:String id="UPrince.GetStarted.Title" DefaultValue=" add-in was succesfully loaded">
+          <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
+        </bt:String>
       </bt:ShortStrings>
       <bt:LongStrings>
         <!-- LongStrings max characters==250 -->
-        <bt:String id="UPrince.GetStarted.Description" DefaultValue="Keep your UPrince GTD up-to-date">
-          <bt:Override Locale="ja-jp" Value="JA-JP Keep your UPrince GTD up-to-date" />
+        <bt:String id="residToolTip" DefaultValue="Multiple Buttons Tooltip">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons Tooltip" />
         </bt:String>
-        <bt:String id="UPrince.TaskpaneButton.Tooltip" DefaultValue="Load UPrince GTD" />
-        
+        <bt:String id="UPrince.GetStarted.Description" DefaultValue="Keep your UPrince projects up-to-date">
+          <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
+        </bt:String>
+        <bt:String id="UPrince.FunctionButton.Tooltip" DefaultValue="Click to Execute Function" />
+        <bt:String id="UPrince.TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane" />
+        <bt:String id="UPrince.Dropdown.Tooltip" DefaultValue="Click to Show Options on this Menu" />
+        <bt:String id="UPrince.Item1.Tooltip" DefaultValue="Click to Show Taskpane1" />
+        <bt:String id="UPrince.Item2.Tooltip" DefaultValue="Click to Show Taskpane2" />
+        <bt:String id="UPrince.GetStarted.Description" DefaultValue="Get going by opening UPrince on the Ribbon and login">
+          <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
+        </bt:String>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

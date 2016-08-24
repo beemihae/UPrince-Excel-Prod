@@ -36,11 +36,8 @@ var app = (function () {
             //deleteTable('ProductDescription');
             localStorage.setItem("dailyLog", "true");
             deleteTable('DailyLog');
-            //deleteTable('ProductDescription');
-            //deleteTable('risk)
-            //riskRegisterGET();
-            //productDescriptionGET();
-            //dailyLogGET();
+
+
         });
 
         $(document).on("click", "#Publish", function () {
@@ -141,7 +138,8 @@ var app = (function () {
         if (date2 == null || date2 == 0) return null;
         else {
             var date = new Date((date2 - (25567 + 2)) * 86400 * 1000);
-            return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+
+            return formatDate(date.toJSON());
         }
     };
 
@@ -186,22 +184,83 @@ var app = (function () {
 
     function deleteTable(name) {
         Excel.run(function (ctx) {
-            var tableName = name;
+            var tableName = 'DailyLog';
+            var tableName2 = 'Projects';
+            var tableName3 = 'atContext';
+            var tableName4 = 'Status';
+            var tableName5 = 'Responsible';
+            var tableName6 = 'Type';
+            var tableName7 = 'Time';
+            var tableName8 = 'Energy';
             var table = ctx.workbook.tables.getItem(tableName);
+            var table2 = ctx.workbook.tables.getItem(tableName2);
+            var table3 = ctx.workbook.tables.getItem(tableName3);
+            var table4 = ctx.workbook.tables.getItem(tableName4);
+            var table5 = ctx.workbook.tables.getItem(tableName5);
+            var table6 = ctx.workbook.tables.getItem(tableName6);
+            var table7 = ctx.workbook.tables.getItem(tableName7);
+            var table8 = ctx.workbook.tables.getItem(tableName8);
             var tableDataRange = table.getDataBodyRange();
-            tableDataRange.load('address')
+            var tableDataRange2 = table2.getDataBodyRange();
+            var tableDataRange3 = table3.getDataBodyRange();
+            var tableDataRange4 = table4.getDataBodyRange();
+            var tableDataRange5 = table5.getDataBodyRange();
+            var tableDataRange6 = table6.getDataBodyRange();
+            var tableDataRange7 = table7.getDataBodyRange();
+            var tableDataRange8 = table8.getDataBodyRange();
+            tableDataRange.load('address');
+            tableDataRange2.load('address');
+            tableDataRange3.load('address');
+            tableDataRange4.load('address');
+            tableDataRange5.load('address');
+            tableDataRange6.load('address');
+            tableDataRange7.load('address');
+            tableDataRange8.load('address');
             //var range = tableDataRange.address;
             //tableDataRange.address.delete();
             return ctx.sync().then(function () {
                 //console.log(tableDataRange.address);
                 var range = tableDataRange.address;
+                var range2 = tableDataRange2.address;
+                var range3 = tableDataRange3.address;
+                var range4 = tableDataRange4.address;
+                var range5 = tableDataRange5.address;
+                var range6 = tableDataRange6.address;
+                var range7 = tableDataRange7.address;
+                var range8 = tableDataRange8.address;
                 var rangeAddress = range.substring(range.indexOf('!') + 1);
-                //var rowCounts = rangeAddress.substring(1);
-                //app.showNotification(rangeAddress)
+                var rangeAddress2 = range2.substring(range2.indexOf('!') + 1);
+                var rangeAddress3 = range3.substring(range3.indexOf('!') + 1);
+                var rangeAddress4 = range4.substring(range4.indexOf('!') + 1);
+                var rangeAddress5 = range5.substring(range5.indexOf('!') + 1);
+                var rangeAddress6 = range6.substring(range6.indexOf('!') + 1);
+                var rangeAddress7 = range7.substring(range7.indexOf('!') + 1);
+                var rangeAddress8 = range8.substring(range8.indexOf('!') + 1);
                 localStorage.setItem('rangeAddress', rangeAddress);
+                localStorage.setItem('rangeAddress2', rangeAddress2);
+                localStorage.setItem('rangeAddress3', rangeAddress3);
+                localStorage.setItem('rangeAddress4', rangeAddress4);
+                localStorage.setItem('rangeAddress5', rangeAddress5);
+                localStorage.setItem('rangeAddress6', rangeAddress6);
+                localStorage.setItem('rangeAddress7', rangeAddress7);
+                localStorage.setItem('rangeAddress8', rangeAddress8);
+
                 var sheetName = range.substring(0, range.indexOf('!'));
+                var sheetName2 = range2.substring(0, range2.indexOf('!'));
+                var sheetName3 = range3.substring(0, range3.indexOf('!'));
+                var sheetName4 = range4.substring(0, range4.indexOf('!'));
+                var sheetName5 = range5.substring(0, range5.indexOf('!'));
+                var sheetName6 = range6.substring(0, range6.indexOf('!'));
+                var sheetName7 = range7.substring(0, range7.indexOf('!'));
+                var sheetName8 = range8.substring(0, range8.indexOf('!'));
                 localStorage.setItem('sheetName', sheetName);
-                localStorage.setItem("rowCounts", rowCounts);
+                localStorage.setItem('sheetName2', sheetName2);
+                localStorage.setItem('sheetName3', sheetName3);
+                localStorage.setItem('sheetName4', sheetName4);
+                localStorage.setItem('sheetName5', sheetName5);
+                localStorage.setItem('sheetName6', sheetName6);
+                localStorage.setItem('sheetName7', sheetName7);
+                localStorage.setItem('sheetName8', sheetName8);
             });
         }).catch(function (error) {
             console.log("Error: " + error);
@@ -209,30 +268,36 @@ var app = (function () {
                 console.log("Debug info: " + JSON.stringify(error.debugInfo));
             }
         });
-        //var length = parseInt(localStorage.getItem('rangeAddress'))-1;
-        //app.showNotification(length);
-        /*for (var i = 0; i < length; i++) {
-            Excel.run(function (ctx) {
-                ctx.workbook.tables.getItem(name).rows.getItemAt(0).delete();
-                return ctx.sync().then(function () {
-                    console.log("Success! Deleted the 0th row from 'MyTable' and shifts cells up.");
-                });;
-            }).catch(function (error) {
-                console.log("Error: " + error);
-            });
-        }*/
+
         Excel.run(function (ctx) {
             var range = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName")).getRange(localStorage.getItem("rangeAddress"));
+            var range2 = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName2")).getRange(localStorage.getItem("rangeAddress2"));
+            var range3 = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName3")).getRange(localStorage.getItem("rangeAddress3"));
+            var range4 = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName4")).getRange(localStorage.getItem("rangeAddress4"));
+            var range5 = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName5")).getRange(localStorage.getItem("rangeAddress5"));
+            var range6 = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName6")).getRange(localStorage.getItem("rangeAddress6"));
+            var range7 = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName7")).getRange(localStorage.getItem("rangeAddress7"));
+            var range8 = ctx.workbook.worksheets.getItem(localStorage.getItem("sheetName8")).getRange(localStorage.getItem("rangeAddress8"));
             //app.showNotification(localStorage.getItem("rangeAddress"));
             range.delete();
-            return ctx.sync();
+            range2.delete();
+            range3.delete();
+            range4.delete();
+            range5.delete();
+            range6.delete();
+            range7.delete();
+            range8.delete();
+            return ctx.sync().then(function () {
+                //dailyLogGET();
+            });
         }).catch(function (error) {
             //app.showNotification("Error: " + error);
+            //dailyLogGET();
             if (error instanceof OfficeExtension.Error) {
                 //app.showNotification("Debug info: " + JSON.stringify(error.debugInfo));
             }
         });
-
+        //dailyLogGET();
         Excel.run(function (ctx) {
             var tableName = name;
             var table = ctx.workbook.tables.getItem(tableName);
@@ -351,6 +416,7 @@ var app = (function () {
                         matrix[i][1] = isNull(str.dailyLogListViewModel[i].activity);
                         matrix[i][2] = isNull(str.dailyLogListViewModel[i].identifier);
                         matrix[i][3] = isNull(str.dailyLogListViewModel[i].atContext);
+                        //matrix[i][4] = str.dailyLogListViewModel[i].targetDate;
                         matrix[i][4] = formatDate(str.dailyLogListViewModel[i].targetDate);
                         matrix[i][5] = isNull(str.dailyLogListViewModel[i].responsibleStatus);
                         matrix[i][6] = isNull(str.dailyLogListViewModel[i].responsible);
@@ -375,7 +441,6 @@ var app = (function () {
                         var line = [1];
                         line[0] = matrix[i];
                         tableRows.add(null, line);
-
                     };
                     return ctx.sync().then(function () {
                         showMessage("Success! My monthly expense table created! Select the arrow button to see how to remove the table.");
@@ -388,6 +453,16 @@ var app = (function () {
 
 
             });
+    };
+
+    function addValues(tableName, row, ctx) {
+        var tables = ctx.workbook.tables;
+        var tableRows = tables.getItem(tableName).rows
+        for (var i = 0; i < row.length; i++) {
+            var line = [1];
+            line[0] = row[i];
+            tableRows.add(null, line);
+        }
     };
 
     function getDailyLog(dailyLogId) {
@@ -404,19 +479,27 @@ var app = (function () {
              Excel.run(function (ctx) {
                  //var matrix = riskValuesImpact(str);
                  if (Object.keys(str.contextList).length != 0) {
-                     ctx.workbook.worksheets.getItem('Values').getRange("G1:G" + Object.keys(str.contextList).length).values = dailyLogContext(str)/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                     //ctx.workbook.worksheets.getItem('Values').getRange("G1:G" + Object.keys(str.contextList).length).values = dailyLogContext(str);
+                     addValues("atContext", dailyLogContext(str), ctx);
                  }
                  if (Object.keys(str.personnelContacts).length != 0) {
-                     ctx.workbook.worksheets.getItem('Values').getRange("I1:I" + Object.keys(str.personnelContacts).length).values = dailyLogUsers(str)
+                     addValues("Responsible", dailyLogUsers(str), ctx);
+                     //ctx.workbook.worksheets.getItem('Values').getRange("I1:I" + Object.keys(str.personnelContacts).length).values = dailyLogUsers(str)
                  }
-                 ctx.workbook.worksheets.getItem('Values').getRange("H1:H6").values = [["Inbox"], ["Next"], ["Waiting"], ["Schedule"], ["Someday"], ["Done"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
-                 ctx.workbook.worksheets.getItem('Values').getRange("J1:J6").values = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
-                 ctx.workbook.worksheets.getItem('Values').getRange("K1:K7").values = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
-                 ctx.workbook.worksheets.getItem('Values').getRange("L1:L5").values = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 var status = [["Inbox"], ["Next"], ["Waiting"], ["Schedule"], ["Someday"], ["Done"]];
+                 addValues("Status", status, ctx);
+                 var type = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]];
+                 addValues("Type", type, ctx);
+                 var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 addValues("Time", time, ctx);
+                 var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 addValues("Energy", energy, ctx);
+
                  if (Object.keys(str.project).length != 0) {
-                     ctx.workbook.worksheets.getItem('Values').getRange("M1:M" + Object.keys(str.project).length).values = dailyLogProject(str);
+                     addValues("Projects", dailyLogProject(str), ctx)
+                     //ctx.workbook.worksheets.getItem('Values').getRange("M1:M" + Object.keys(str.project).length).values = dailyLogProject(str);
                  }
-                 
+
                  return ctx.sync().then(function () {
                      //console.log("Success! Insert range in A1:C3.");
                  });
@@ -460,7 +543,7 @@ var app = (function () {
         }
         //app.showNotification(val[2][0]);
         return val;
-    } 
+    }
 
     function publishDailyLog() {
         Excel.run(function (ctx) {
