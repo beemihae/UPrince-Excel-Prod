@@ -446,9 +446,9 @@
                      addValues("Status", status, ctx);
                      var type = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]];
                      addValues("Type", type, ctx);
-                     var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                     var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"],["' -"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                      addValues("Time", time, ctx);
-                     var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                     var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"], ["' -"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                      addValues("Energy", energy, ctx);
 
                      if (Object.keys(str.project).length != 0) {
