@@ -91,7 +91,7 @@
                   <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                 </Icon>
                 <!--Control. It can be of type "Button" or "Menu" -->
-                <Control xsi:type="Button" id="UPrince.Button3Id1">
+                <Control xsi:type="Button" id="UPrince.Button1Id1">
                   <Label resid="residLabel1" />
                   <Supertip>
                     <Title resid="residLabel1" />
@@ -121,7 +121,51 @@
                     <FunctionName>refresh</FunctionName>
                   </Action>
                 </Control>
-
+                <Control xsi:type="Button" id="UPrince.Button3Id1">
+                  <Label resid="residLabel3" />
+                  <Supertip>
+                    <Title resid="residLabel3" />
+                    <Description resid="residToolTip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>commit</FunctionName>
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="UPrince.Button4Id1">
+                  <Label resid="residLabel4" />
+                  <Supertip>
+                    <Title resid="residLabel4" />
+                    <Description resid="residToolTip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="residUnitConverterUrl4" />
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="UPrince.Button5Id1">
+                  <Label resid="residLabel5" />
+                  <Supertip>
+                    <Title resid="residLabel5" />
+                    <Description resid="residToolTip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="residUnitConverterUrl6" />
+                  </Action>
+                </Control>
                 <Control xsi:type="Button" id="UPrince.Button6Id1">
                   <Label resid="residLabel6" />
                   <Supertip>
@@ -152,65 +196,7 @@
                     <FunctionName>logOut</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Menu" id="UPrince.Menu">
-                  <Label resid="UPrince.Dropdown.Label" />
-                  <Supertip>
-                    <Title resid="UPrince.Dropdown.Label" />
-                    <Description resid="UPrince.Dropdown.Tooltip" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon32" />
-                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon80" />
-                  </Icon>
-                  <Items>
-                    <Item id="UPrince.Button1Id1">
-                      <Label resid="residLabel3" />
-                      <Supertip>
-                        <Title resid="residLabel3" />
-                        <Description resid="residToolTip" />
-                      </Supertip>
-                      <Icon>
-                        <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                        <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
-                        <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
-                      </Icon>
-                      <Action xsi:type="ExecuteFunction">
-                        <FunctionName>commit</FunctionName>
-                      </Action>
-                    </Item>
-                    <Item id="UPrince.Button4Id1">
-                      <Label resid="residLabel4" />
-                      <Supertip>
-                        <Title resid="residLabel4" />
-                        <Description resid="residToolTip" />
-                      </Supertip>
-                      <Icon>
-                        <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                        <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
-                        <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
-                      </Icon>
-                      <Action xsi:type="ShowTaskpane">
-                        <SourceLocation resid="residUnitConverterUrl4" />
-                      </Action>
-                    </Item>
-                    <Item id="UPrince.Button5Id1">
-                      <Label resid="residLabel5" />
-                      <Supertip>
-                        <Title resid="residLabel5" />
-                        <Description resid="residToolTip" />
-                      </Supertip>
-                      <Icon>
-                        <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                        <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
-                        <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
-                      </Icon>
-                      <Action xsi:type="ShowTaskpane">
-                        <SourceLocation resid="residUnitConverterUrl5" />
-                      </Action>
-                    </Item>
-                  </Items>
-                </Control>
+
               </Group>
 
             </OfficeTab>
@@ -278,7 +264,7 @@
         <bt:String id="UPrince.Dropdown.Label" DefaultValue="Dropdown" />
         <bt:String id="UPrince.GetStarted.Title" DefaultValue="UPrince Loaded Successfully">
           <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
-          
+
         </bt:String>
 
 
