@@ -188,6 +188,8 @@
 
     function logOut() {
         var code = localStorage.getItem('accessToken');
+        localStorage.setItem("email", '');
+        localStorage.setItem("uId", '');
         //app.showNotification(code);
         var uId = localStorage.getItem('uId');
         var url = "https://plaza.uprince.com/api/core/logout_user";

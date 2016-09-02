@@ -589,7 +589,7 @@ var app = (function () {
         Excel.run(function (ctx) {
             var count = (range + 2);
             //app.showNotification(typeof(range) + "  "+ typeof(range + 1));
-            var excelRange = "C" + count + ":C" + count;
+            var excelRange = "K" + count + ":K" + count;
             //app.showNotification(excelRange);
             ctx.workbook.worksheets.getItem('DailyLog').getRange(excelRange).values = ("" + id)/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
 
@@ -646,7 +646,7 @@ var app = (function () {
         var urlProject = host + '/api/DailyLog/PostDailyLogHeader';
         var urlProject2 = host + '/api/DailyLog/PostDailyLogInvolvedTiming';
         var dataEmail = {
-            "id": line.values[0][2],
+            "id": null,
             "projectId": localStorage.getItem("dailyLogProject" + line.values[0][0]),
             "activityTypeId": isActivityType(line.values[0][7]),
             "title": isNull(line.values[0][1]),
