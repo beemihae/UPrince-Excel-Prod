@@ -311,9 +311,9 @@ var app = (function () {
                 var rangeAddress = range.substring(range.indexOf('!') + 1);
                 //var rowCounts = rangeAddress.substring(1);
                 //app.showNotification(rangeAddress)
-                if (rangeAddress != "A2:J2" && ctx.workbook.tables.getItem("DailyLog").rows.load("values").items[0].values[0][1] != '') {
+                if (rangeAddress != "A2:K2" && ctx.workbook.tables.getItem("DailyLog").rows.load("values").items[0].values[0][1] != '') {
                     deleteTable(name);
-                    app.showNotification(ctx.workbook.tables.getItem("DailyLog").rows.load("values").items[0].values[0][1]);
+                    //app.showNotification(ctx.workbook.tables.getItem("DailyLog").rows.load("values").items[0].values[0][1]);
                 }
                 else if (localStorage.getItem("dailyLog") == "true") {
                     dailyLogGET();
@@ -410,11 +410,13 @@ var app = (function () {
                 if (str.dailyLogListViewModel.length > 0) {
                     var matrix = [str.dailyLogListViewModel.length];
                     for (var i = 0; i < str.dailyLogListViewModel.length; i++) {
-                        matrix[i] = [10];
-                        DlId[i] = str.dailyLogListViewModel[i].identifier;
+                        matrix[i] = [11];
+                        DlId[i] = str.dailyLogListViewModel[i].id;
                         matrix[i][0] = isNull(str.dailyLogListViewModel[i].project);
-                        matrix[i][1] = isNull(str.dailyLogListViewModel[i].activity);
-                        matrix[i][2] = isNull(str.dailyLogListViewModel[i].identifier);
+                        var activity = isNull(str.dailyLogListViewModel[i].activity);
+                        matrix[i][1] = activity;
+                        var identifier = isNull(str.dailyLogListViewModel[i].identifier);
+                        matrix[i][10] = str.dailyLogListViewModel[i].id;
                         matrix[i][3] = isNull(str.dailyLogListViewModel[i].atContext);
                         //matrix[i][4] = str.dailyLogListViewModel[i].targetDate;
                         matrix[i][4] = formatDate(str.dailyLogListViewModel[i].targetDate);
@@ -423,13 +425,18 @@ var app = (function () {
                         matrix[i][7] = isNull(str.dailyLogListViewModel[i].activityType);
                         matrix[i][8] = isNull(str.dailyLogListViewModel[i].time);
                         matrix[i][9] = isNull(str.dailyLogListViewModel[i].energy);
+                        matrix[i][2] = isNull(str.dailyLogListViewModel[i].identifier);
+                        //matrix[i][10] = 'hello';
                         storeLineDaily(matrix[i]);
+                        //GTD > excel > Hyperlink 
+                        matrix[i][2] = '=HYPERLINK("https://start.uprince.com/Home/Index/gdt/daily-log/description/"&[@Column1],[@Column1])'
+
                         //app.showNotification(matrix[i].toString())
                         //matrix[i][6] = isNull(str[i].Version);
                         //localStorage.setItem("ParentId" + str[i].Id, str[i].ParentId);
                     }
                 } else {
-                    var matrix = [["", "", "", "", "", "", "", "", "", ""]]
+                    var matrix = [["", "", "", "", "", "", "", "", "", "", ""]]
                 };
 
                 localStorage.setItem("DlId", DlId);
@@ -488,11 +495,11 @@ var app = (function () {
                  }
                  var status = [["Inbox"], ["Next"], ["Waiting"], ["Schedule"], ["Someday"], ["Done"]];
                  addValues("Status", status, ctx);
-                 var type = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]];
+                 var type = [  ["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]];
                  addValues("Type", type, ctx);
-                 var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"], ["' -"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"], [" - "]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                  addValues("Time", time, ctx);
-                 var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"], ["' -"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"], [" - "]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                  addValues("Energy", energy, ctx);
 
                  if (Object.keys(str.project).length != 0) {
@@ -512,7 +519,7 @@ var app = (function () {
     function dailyLogContext(str) {
         var val = [Object.keys(str.contextList).length];
         for (var i = 0; i < Object.keys(str.contextList).length; i++) {
-            val[i] = [1];
+            val[i] = [1];   
             val[i][0] = str.contextList[i].description;
             localStorage.setItem('dailyLogContext' + str.contextList[i].description, "" + str.contextList[i].id);
             //val[i] = str.impact[i].State;
@@ -548,6 +555,11 @@ var app = (function () {
     function publishDailyLog() {
         Excel.run(function (ctx) {
             var rows = ctx.workbook.tables.getItem("DailyLog").rows.load("values");
+            for (var i = 0; i < 11; i++) {
+                var column = ctx.workbook.tables.getItem("DailyLog").columns.getItemAt(i);
+                column.filter.clear();
+            }
+
             return ctx.sync()
                 .then(function () {
                     var DlId = localStorage.getItem('DlId');
@@ -713,7 +725,7 @@ var app = (function () {
     };
 
     function isNewDaily(line) {
-        if (line.values[0][2] == null || line.values[0][2] == "") return true;
+        if (line.values[0][10] == null || line.values[0][10] == "") return true;
         else return false;
     }
 
@@ -725,7 +737,7 @@ var app = (function () {
     }
 
     function editedLine(line) {
-        var oldLine = localStorage.getItem("line" + line.values[0][2]);
+        var oldLine = localStorage.getItem("line" + line.values[0][10]);
         var temporary = line.values[0][4];
         line.values[0][4] = formatDate3(line.values[0][4]);
         //app.showNotification(oldLine + " / " + line.values[0].toString());

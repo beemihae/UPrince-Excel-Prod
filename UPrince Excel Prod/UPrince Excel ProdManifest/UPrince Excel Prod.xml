@@ -10,8 +10,8 @@
   <ProviderName>UPrince bvba</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various placed of the Office UI such as the add-ins dialog -->
-  <DisplayName DefaultValue="UPrince: GTD for project managers" />
-  <Description DefaultValue="The easiest way to get organized"/>
+  <DisplayName DefaultValue="UPrince: Manage PRINCE2 products" />
+  <Description DefaultValue="he easiest way to edit GTD in excel"/>
 
   <!--Icon for your add-in. Used on installation screens and the add-ins dialog -->
   <IconUrl DefaultValue="https://document.uprince.com/Images/ico_uprince_32.jpg" />
@@ -19,18 +19,16 @@
   <!--Todo: Add requirement sets and remove  commenting of high res icon -->
   <!--The HighResolutionIcon element is commented because it is valid only for 1.1 (or above) versions of the manifest.
           To use this property, convert this manifest to version 1.1 by adding an API set in the Activation tab of the manifest editor.-->
-  <HighResolutionIconUrl DefaultValue="http://document.uprince.com/Images/ico_uprince_64.jpg" />
-  <SupportUrl DefaultValue="https://sway.com/NNzEd5KE8iA9lonG" />
+  <!--<HighResolutionIconUrl DefaultValue="https://i.imgur.com/MPuvMiq.png" />-->
 
   <!--Domains that will be allowed when navigating. For example, if you use ShowTaskpane and then have an href link, navigation will only be allowed if the domain is on this list -->
   <AppDomains>
+    <AppDomain>https://spreadsheet.uprince.com</AppDomain>
     <AppDomain>https://plaza.uprince.com/oauth2/authorize</AppDomain>
     <AppDomain>https://plaza.uprince.com/user/login</AppDomain>
     <AppDomain>https://www.linkedin.com/uas/oauth/authorize</AppDomain>
     <AppDomain>https://plaza.uprince.com</AppDomain>
     <AppDomain>https://www.linkedin.com/uas/oauth/authorize</AppDomain>
-    <AppDomain>https://spreadsheet.uprince.com</AppDomain>
-
   </AppDomains>
   <!--EndBasicSettings-->
 
@@ -79,28 +77,25 @@
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <!--Use OfficeTab to extend an existing Tab. Use CustomTab to create a new tab -->
             <!-- Documentation includes all the IDs currently tested to work -->
-            <CustomTab id="UPrince.Tab1">
-              <!--Group. Ensure you provide a unique id. Recommendation for any IDs is to namespace using your company name-->
+            <OfficeTab id="TabData">
+              <!--Group. Ensure you provide a unique id. Recommendation for any IDs is to namespace using your companyname-->
               <Group id="UPrince.Tab1.Group1">
+
                 <!--Label for your group. resid must point to a ShortString resource -->
-                <Label resid="UPrince.Tab1.GroupLabel" />
+                <Label resid="UPrince.Tab1.Group1Label" />
+                <!--Icons. Required sizes 16,31,80, optional 20, 24, 40, 48, 64. Strongly recommended to provide all sizes for great UX -->
+                <!--Use PNG icons and remember that all URLs on the resources section must use HTTPS -->
                 <Icon>
-                  <!-- Sample Todo: Each size needs its own icon resource or it will look distorted when resized -->
-                  <!--Icons. Required sizes 16,31,80, optional 20, 24, 40, 48, 64. Strongly recommended to provide all sizes for great UX -->
-                  <!--Use PNG icons and remember that all URLs on the resources section must use HTTPS -->
                   <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
                   <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
                   <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                 </Icon>
-
                 <!--Control. It can be of type "Button" or "Menu" -->
-                
-
-                <Control xsi:type="Button" id="UPrince.TaskpaneButton">
-                  <Label resid="UPrince.TaskpaneButton.Label" />
+                <Control xsi:type="Button" id="UPrince.Button3Id1">
+                  <Label resid="residLabel1" />
                   <Supertip>
-                    <Title resid="UPrince.TaskpaneButton.Label" />
-                    <Description resid="UPrince.TaskpaneButton.Tooltip" />
+                    <Title resid="residLabel1" />
+                    <Description resid="residToolTip" />
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
@@ -108,19 +103,17 @@
                     <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                   </Icon>
                   <Action xsi:type="ShowTaskpane">
-                    <TaskpaneId>Button2Id1</TaskpaneId>
-                    <!--Provide a url resource id for the location that will be displayed on the task pane -->
-                    <SourceLocation resid="UPrince.Taskpane1.Url" />
+                    <SourceLocation resid="residUnitConverterUrl" />
                   </Action>
                 </Control>
-<Control xsi:type="Button" id="Contoso.Button2Id1">
-                  <Label resid="residLabel3" />
+                <Control xsi:type="Button" id="UPrince.Button2Id1">
+                  <Label resid="residLabel2" />
                   <Supertip>
-                    <Title resid="residLabel4" />
+                    <Title resid="residLabel2" />
                     <Description resid="residToolTip" />
                   </Supertip>
                   <Icon>
-                         <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
                     <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
                     <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                   </Icon>
@@ -128,30 +121,99 @@
                     <FunctionName>refresh</FunctionName>
                   </Action>
                 </Control>
-              <Control xsi:type="Button" id="Contoso.Button1Id1">
-                  <Label resid="residLabel5" />
+
+                <Control xsi:type="Button" id="UPrince.Button6Id1">
+                  <Label resid="residLabel6" />
                   <Supertip>
                     <Title resid="residLabel6" />
                     <Description resid="residToolTip" />
                   </Supertip>
                   <Icon>
-                     <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="residUnitConverterUrl6" />
+                  </Action>
+                </Control>
+                <Control xsi:type="Button" id="UPrince.Button7Id1">
+                  <Label resid="residLabel7" />
+                  <Supertip>
+                    <Title resid="residLabel7" />
+                    <Description resid="residToolTip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
                     <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
                     <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
-                    <FunctionName>commit</FunctionName>
+                    <FunctionName>logOut</FunctionName>
                   </Action>
                 </Control>
-                <!-- Menu example -->
-                
-
+                <Control xsi:type="Menu" id="UPrince.Menu">
+                  <Label resid="UPrince.Dropdown.Label" />
+                  <Supertip>
+                    <Title resid="UPrince.Dropdown.Label" />
+                    <Description resid="UPrince.Dropdown.Tooltip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon80" />
+                  </Icon>
+                  <Items>
+                    <Item id="UPrince.Button1Id1">
+                      <Label resid="residLabel3" />
+                      <Supertip>
+                        <Title resid="residLabel3" />
+                        <Description resid="residToolTip" />
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                        <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                        <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                      </Icon>
+                      <Action xsi:type="ExecuteFunction">
+                        <FunctionName>commit</FunctionName>
+                      </Action>
+                    </Item>
+                    <Item id="UPrince.Button4Id1">
+                      <Label resid="residLabel4" />
+                      <Supertip>
+                        <Title resid="residLabel4" />
+                        <Description resid="residToolTip" />
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                        <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                        <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                      </Icon>
+                      <Action xsi:type="ShowTaskpane">
+                        <SourceLocation resid="residUnitConverterUrl4" />
+                      </Action>
+                    </Item>
+                    <Item id="UPrince.Button5Id1">
+                      <Label resid="residLabel5" />
+                      <Supertip>
+                        <Title resid="residLabel5" />
+                        <Description resid="residToolTip" />
+                      </Supertip>
+                      <Icon>
+                        <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                        <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                        <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                      </Icon>
+                      <Action xsi:type="ShowTaskpane">
+                        <SourceLocation resid="residUnitConverterUrl5" />
+                      </Action>
+                    </Item>
+                  </Items>
+                </Control>
               </Group>
 
-              <!-- Label of your tab -->
-              <!-- If validating with XSD it needs to be at the end, we might change this before release -->
-              <Label resid="UPrince.Tab1.TabLabel" />
-            </CustomTab>
+            </OfficeTab>
           </ExtensionPoint>
 
 
@@ -166,50 +228,60 @@
         <bt:Image id="UPrince.TaskpaneButton.Icon.16" DefaultValue="https://document.uprince.com/Images/ico_uprince_16.png" />
         <bt:Image id="UPrince.TaskpaneButton.Icon.32" DefaultValue="https://document.uprince.com/Images/ico_uprince_32.png" />
         <bt:Image id="UPrince.TaskpaneButton.Icon.80" DefaultValue="https://document.uprince.com/Images/ico_uprince_80.png" />
-        <bt:Image id="UPrince.TaskpaneButton.Icon" DefaultValue="https://i.imgur.com/FkSShX9.png" />
         <bt:Image id="UPrince.FunctionButton.Icon" DefaultValue="https://i.imgur.com/qDujiX0.png" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="residDesktopFuncUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/FunctionFile.html">
-          <bt:Override Locale="ja-jp" Value="https://spreadsheet.uprince.com/addin/home/home.html" />
+        <bt:Url id="residDesktopFuncUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/functionfile.html">
+          <bt:Override Locale="ja-jp" Value="https://spreadsheet.uprince.com/addin/home/functionfile.html" />
         </bt:Url>
-        <bt:Url id="UPrince.FunctionFile.Url" DefaultValue="https://commandsimple.azurewebsites.net/FunctionFile.html" />
-        <bt:Url id="UPrince.Taskpane1.Url" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html" />
-        <bt:Url id="UPrince.Taskpane2.Url" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html" />
+        <bt:Url id="residUnitConverterUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html">
+        </bt:Url>
+        <bt:Url id="residUnitConverterUrl4" DefaultValue="https://spreadsheet.uprince.com/addin/home/addPerson.html">
+        </bt:Url>
+        <bt:Url id="residUnitConverterUrl5" DefaultValue="https://spreadsheet.uprince.com/addin/home/addProject.html">
+        </bt:Url>
+        <bt:Url id="residUnitConverterUrl6" DefaultValue="https://spreadsheet.uprince.com/addin/home/addContext.html">
+        </bt:Url>
         <!--LearnMore URL currently not used -->
-        <bt:Url id="UPrince.GetStarted.LearnMoreUrl" DefaultValue="https://commandsimple.azurewebsites.net/GetStarted.html"></bt:Url>
+        <bt:Url id="UPrince.GetStarted.LearnMoreUrl" DefaultValue="https://odsample.azurewebsites.net/Pages/GetStarted.html">
+        </bt:Url>
       </bt:Urls>
       <bt:ShortStrings>
         <!-- ShortStrings max characters==125 -->
-        <bt:String id="residLabel" DefaultValue="Get Data">
+        <bt:String id="residLabel1" DefaultValue="Login">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
-        <bt:String id="residLabel2" DefaultValue="Save Data">
+        <bt:String id="residLabel2" DefaultValue="Refresh">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
-      
- <bt:String id="residLabel3" DefaultValue="Refresh">
+        <bt:String id="residLabel3" DefaultValue="Commit">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
-        <bt:String id="residLabel4" DefaultValue="Projects">
+        <bt:String id="residLabel4" DefaultValue="Add Person">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
-        <bt:String id="residLabel5" DefaultValue="Commit">
+        <bt:String id="residLabel5" DefaultValue="Add Project">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
-        <bt:String id="residLabel6" DefaultValue="Commit">
+        <bt:String id="residLabel6" DefaultValue="Add @Context">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
+        <bt:String id="residLabel7" DefaultValue="Logout">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="UPrince.Tab1.Group1Label" DefaultValue="UPrince GTD">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="UPrince.Tab1.Group2Label" DefaultValue="UPrince GTD">
+          <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
+        </bt:String>
+        <bt:String id="UPrince.Dropdown.Label" DefaultValue="Dropdown" />
         <bt:String id="UPrince.GetStarted.Title" DefaultValue="UPrince Loaded Successfully">
           <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
+          
         </bt:String>
-        <bt:String id="UPrince.FunctionButton.Label" DefaultValue="Execute Function" />
-        <bt:String id="UPrince.TaskpaneButton.Label" DefaultValue="Login" />
-        <bt:String id="UPrince.Tab1.GroupLabel" DefaultValue="GTD" />
-        <bt:String id="UPrince.Tab1.TabLabel" DefaultValue="UPrince" />
-        <bt:String id="UPrince.GetStarted.Title" DefaultValue=" add-in was succesfully loaded">
-          <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
-        </bt:String>
+
+
       </bt:ShortStrings>
       <bt:LongStrings>
         <!-- LongStrings max characters==250 -->
@@ -219,15 +291,8 @@
         <bt:String id="UPrince.GetStarted.Description" DefaultValue="Keep your UPrince projects up-to-date">
           <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
         </bt:String>
-        <bt:String id="UPrince.FunctionButton.Tooltip" DefaultValue="Click to Execute Function" />
-        <bt:String id="UPrince.TaskpaneButton.Tooltip" DefaultValue="Click to Show a Taskpane" />
-        <bt:String id="UPrince.Dropdown.Tooltip" DefaultValue="Click to Show Options on this Menu" />
-        <bt:String id="UPrince.Item1.Tooltip" DefaultValue="Click to Show Taskpane1" />
-        <bt:String id="UPrince.Item2.Tooltip" DefaultValue="Click to Show Taskpane2" />
-        <bt:String id="UPrince.GetStarted.Description" DefaultValue="Get going by opening UPrince on the Ribbon and login">
-          <bt:Override Locale="ja-jp" Value="JA-JP Get Started Title" />
-        </bt:String>
       </bt:LongStrings>
+      <bt:String id="UPrince.Dropdown.Tooltip" DefaultValue="Click to Show Options on this Menu" />
     </Resources>
   </VersionOverrides>
   <!--EndAddinCommandsMode integration-->
