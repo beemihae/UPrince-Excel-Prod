@@ -198,7 +198,34 @@
                 </Control>
 
               </Group>
+<!--              <Group id="UPrince.Tab2.Group2">
 
+               
+                <Label resid="UPrince.Tab2.Group2Label" />
+                <Icon>
+                  <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                  <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                  <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                </Icon>
+                
+                <Control xsi:type="Button" id="UPrince.Button7Id1">
+                  <Label resid="residLabel7" />
+                  <Supertip>
+                    <Title resid="residLabel7" />
+                    <Description resid="residToolTip" />
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
+                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
+                  </Icon>
+                  <Action xsi:type="ExecuteFunction">
+                    <FunctionName>logOut</FunctionName>
+                  </Action>
+                </Control>
+
+              </Group>
+-->
             </OfficeTab>
           </ExtensionPoint>
 
@@ -258,7 +285,7 @@
         <bt:String id="UPrince.Tab1.Group1Label" DefaultValue="UPrince GTD">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
-        <bt:String id="UPrince.Tab1.Group2Label" DefaultValue="UPrince GTD">
+        <bt:String id="UPrince.Tab2.Group2Label" DefaultValue="UPrince GTD">
           <bt:Override Locale="ja-jp" Value="JA-JP Multiple Buttons" />
         </bt:String>
         <bt:String id="UPrince.Dropdown.Label" DefaultValue="Dropdown" />
