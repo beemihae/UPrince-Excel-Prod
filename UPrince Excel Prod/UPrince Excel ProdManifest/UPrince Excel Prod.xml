@@ -196,9 +196,10 @@
                     <FunctionName>logOut</FunctionName>
                   </Action>
                 </Control>
+                
 
               </Group>
-<!--              <Group id="UPrince.Tab2.Group2">
+            <Group id="UPrince.Tab2.Group2">
 
                
                 <Label resid="UPrince.Tab2.Group2Label" />
@@ -225,7 +226,7 @@
                 </Control>
 
               </Group>
--->
+
             </OfficeTab>
           </ExtensionPoint>
 
