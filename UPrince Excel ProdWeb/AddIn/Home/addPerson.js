@@ -40,10 +40,11 @@
                             if (/*document.getElementById("company").value != null ||*/ document.getElementById("company").value != "") {
                                 responsible = responsible + " (" + document.getElementById("company").value + ")";
                             };
-                            app.showNotification(document.getElementById("company").value + str.involvedPersonId);
-
-                            console.log(responsible);
+                            document.getElementById("addPersonStatus").innerHTML = "";
+                            $("#addPersonStatus").append(responsible + " "+str.involvedPersonId);
                             localStorage.setItem('dailyLogUsers' + responsible, str.involvedPersonId);
+                            $("#addPersonStatus").append(localStorage.getItem('dailyLogUsers' + responsible));
+
                             var values = [[responsible]];
                             var row = tables.getItem("Responsible").rows.add(null, values);
                             row.load('index');
