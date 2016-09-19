@@ -307,7 +307,6 @@ var app = (function () {
         })
             .done(function (str) {
                 //app.showNotification(str.dailyLogListViewModel.length);
-                getDailyLog(str.dailyLogListViewModel[1].identifier);
                 var DlId = [str.dailyLogListViewModel.length];
                 if (str.dailyLogListViewModel.length > 0) {
                     var matrix = [str.dailyLogListViewModel.length];
@@ -330,7 +329,7 @@ var app = (function () {
                         matrix[i][2] = isNull(str.dailyLogListViewModel[i].identifier);
                         //matrix[i][10] = 'hello';
                         storeLineDaily(matrix[i]);
-                        //GTD > excel > Hyperlink 
+                        //GTD > excel > Hyperlink
                         matrix[i][2] = '=HYPERLINK("https://start.uprince.com/Home/Index/gdt/daily-log/description/"&[@Column1],[@Column1])'
 
                         //app.showNotification(matrix[i].toString())
@@ -356,6 +355,7 @@ var app = (function () {
                          showMessage(JSON.stringify(error));
                      });
                 });
+                getDailyLog(str.dailyLogListViewModel[1].identifier);
 
 
             });
@@ -379,32 +379,29 @@ var app = (function () {
         })
          .done(function (str) {
              //app.showNotification(str.impact[0].State);
+             if (Object.keys(str.personnelContacts).length != 0) {
+                 userInvolvedPersonList();
+             }
+             if (Object.keys(str.contextList).length != 0) {
+                 //ctx.workbook.worksheets.getItem('Values').getRange("G1:G" + Object.keys(str.contextList).length).values = dailyLogContext(str);
+                 getDailyLogContextList();
+             }
+             if (Object.keys(str.project).length != 0) {
+                 getProjectList();
+             }
              Excel.run(function (ctx) {
                  //var matrix = riskValuesImpact(str);
-                 if (Object.keys(str.contextList).length != 0) {
-                     //ctx.workbook.worksheets.getItem('Values').getRange("G1:G" + Object.keys(str.contextList).length).values = dailyLogContext(str);
-                     var context = dailyLogContext(str);
-                     addValues("B2:B" + (context.length + 1), context, ctx);
-                 }
-                 if (Object.keys(str.personnelContacts).length != 0) {
-                     var contacts = dailyLogUsers(str);
-                     addValues("D2:D" + (contacts.length + 1), contacts, ctx);
-                     //ctx.workbook.worksheets.getItem('Values').getRange("I1:I" + Object.keys(str.personnelContacts).length).values = dailyLogUsers(str)
-                 }
-                 var status = [["Inbox"], ["Next"], ["Waiting"], ["Schedule"], ["Someday"], ["Done"]];
+
+                 var status = [["Inbox"], ["Next Action"], ["Waiting For"], ["Scheduled"], ["Someday"], ["Done"]];
                  addValues("C2:C" + (status.length + 1), status, ctx);
                  var type = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]];
                  addValues("E2:E" + (type.length + 1), type, ctx);
-                 var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"], [" - "]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"], ["-"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                  addValues("F2:F" + (time.length + 1), time, ctx);
-                 var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"], [" - "]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                 var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"], ["-"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
                  addValues("G2:G" + (energy.length + 1), energy, ctx);
 
-                 if (Object.keys(str.project).length != 0) {
-                     var projects = dailyLogProject(str);
-                     addValues("A2:A" + (projects.length + 1), projects, ctx)
-                     //ctx.workbook.worksheets.getItem('Values').getRange("M1:M" + Object.keys(str.project).length).values = dailyLogProject(str);
-                 }
+
 
                  return ctx.sync().then(function () {
                      //console.log("Success! Insert range in A1:C3.");
@@ -415,41 +412,136 @@ var app = (function () {
          })
     };
 
-    function dailyLogContext(str) {
-        var val = [Object.keys(str.contextList).length];
-        for (var i = 0; i < Object.keys(str.contextList).length; i++) {
-            val[i] = [1];
-            val[i][0] = str.contextList[i].description;
-            localStorage.setItem('dailyLogContext' + str.contextList[i].description, "" + str.contextList[i].id);
-            //val[i] = str.impact[i].State;
+    function userInvolvedPersonList() {
+        var urlProject = host + '/api/UserInvolvedPerson/GetUserInvolvedPersonList';
+        var dataEmail = {
+            "userEmail": localStorage.getItem("email"),
+            "name": "",
+            "company": "",
+            "sortField": "name",
+            "sortOrder": "ASC"
         }
-        //app.showNotification(val[2][0]);
-        return val;
-    };
+        $.ajax({
+            type: 'POST',
+            url: urlProject,
+            async: false,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataEmail)
+        })
+         .done(function (str) {
+             var val = [Object.keys(str).length];
+             for (var i = 0; i < Object.keys(str).length; i++) {
+                 val[i] = [1];
+                 var responsible = str[i].lastName;
+                 if (str[i].company != "" && str[i].company != null) {
+                     responsible = responsible + " (" + str[i].company + ")";
+                 };
+                 if (str[i].firstName != "" && str[i].firstName != null) {
+                     responsible = str[i].firstName + " " + responsible;
+                 };
+                 val[i][0] = responsible;
+                 localStorage.setItem('dailyLogUsers' + responsible, "" + str[i].id);
 
-    function dailyLogUsers
-        (str) {
-        var val = [Object.keys(str.personnelContacts).length];
-        for (var i = 0; i < Object.keys(str.personnelContacts).length; i++) {
-            val[i] = [1];
-            val[i][0] = str.personnelContacts[i].State;
-            localStorage.setItem('dailyLogUsers' + str.personnelContacts[i].State, "" + str.personnelContacts[i].StateId);
-            //val[i] = str.impact[i].State;
-        }
-        //app.showNotification(val[2][0]);
-        return val;
+             }
+             Excel.run(function (ctx) {
+                 addValues("D2:D" + (val.length + 1), val, ctx);
+                 return ctx.sync().then(function () {
+                     //console.log("Success! Insert range in A1:C3.");
+                 });
+             }).catch(function (error) {
+                 //app.showNotification(error);
+             })
+
+         })
     }
 
-    function dailyLogProject(str) {
-        var val = [Object.keys(str.project).length];
-        for (var i = 0; i < Object.keys(str.project).length; i++) {
-            val[i] = [1];
-            val[i][0] = str.project[i].State;
-            localStorage.setItem('dailyLogProject' + str.project[i].State, "" + str.project[i].StateId);
-            //val[i] = str.impact[i].State;
+    function getDailyLogContextList() {
+        var urlProject = host + '/api/DailyLog/GetDailyLogContextList';
+        var dataEmail = {
+            "coreUserEmail": localStorage.getItem("email"),
+            "orderField": "order",
+            "sortOrder": "ASC"
         }
-        //app.showNotification(val[2][0]);
-        return val;
+        $.ajax({
+            type: 'POST',
+            url: urlProject,
+            async: false,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataEmail)
+        })
+         .done(function (str) {
+             var val = [Object.keys(str).length];
+             for (var i = 0; i < Object.keys(str).length; i++) {
+                 val[i] = [1];
+                 var context = str[i].description;
+                 val[i][0] = context;
+                 localStorage.setItem('dailyLogContext' + context, "" + str[i].id);
+             }
+             Excel.run(function (ctx) {
+                 addValues("B2:B" + (val.length + 1), val, ctx);
+                 return ctx.sync().then(function () {
+                 });
+             }).catch(function (error) {
+                 //app.showNotification(error);
+             })
+
+         })
+    }
+
+    function getProjectList() {
+        var urlProject = host + '/api/project/GetProjectList';
+        var dataEmail = {
+            "customer": "",
+            "email": localStorage.getItem("email"),
+            "isFocused": {
+                "customer": false,
+                "title": false
+            },
+            "isRecycled": false,
+            "orderField": "title",
+            "sortOrder": "ASC",
+            "status": {
+                "Active": false,
+                "All": true,
+                "Closed": false,
+                "New": false
+            },
+            "title": "",
+            "toleranceStatus": {
+                "All": true,
+                "OutofTolerance": false,
+                "Tolerancelimit": false,
+                "WithinTolerance": false
+            }
+        }
+        $.ajax({
+            type: 'POST',
+            url: urlProject,
+            async: false,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataEmail)
+        })
+         .done(function (str) {
+             var val = [Object.keys(str).length];
+             for (var i = 0; i < Object.keys(str).length; i++) {
+                 val[i] = [1];
+                 var project = str[i].title;
+                 val[i][0] = project;
+                 localStorage.setItem('dailyLogProject' + project, "" + str[i].id);
+             }
+             Excel.run(function (ctx) {
+                 addValues("A2:A" + (val.length + 1), val, ctx);
+                 return ctx.sync().then(function () {
+                     //console.log("Success! Insert range in A1:C3.");
+                 });
+             }).catch(function (error) {
+                 //app.showNotification(error);
+             })
+
+         })
     }
 
     function publishDailyLog() {
@@ -546,9 +638,9 @@ var app = (function () {
 
     function isResponseStatus(type) {
         if (type == "Inbox") return "0";
-        else if (type == "Next") return "1";
-        else if (type == "Waiting") return "2";
-        else if (type == "Schedule") return "3";
+        else if (type == "Next Action") return "1";
+        else if (type == "Waiting For") return "2";
+        else if (type == "Scheduled") return "3";
         else if (type == "Someday") return "4";
         else if (type == "Done") return "5";
         else return null;

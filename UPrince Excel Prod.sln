@@ -7,6 +7,11 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UPrince Excel Prod", "UPrin
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "UPrince Excel ProdWeb", "UPrince Excel ProdWeb\UPrince Excel ProdWeb.vbproj", "{A0BCB35B-603A-4099-8535-8B493F4ADDF4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{755D7E28-D802-457F-B2E3-A13923BF6E22}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Desktop\20160902GTD template UPrince.xlsx = ..\..\..\Desktop\20160902GTD template UPrince.xlsx
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

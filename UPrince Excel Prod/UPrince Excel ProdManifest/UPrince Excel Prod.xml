@@ -136,51 +136,6 @@
                     <FunctionName>commit</FunctionName>
                   </Action>
                 </Control>
-                <Control xsi:type="Button" id="UPrince.Button4Id1">
-                  <Label resid="residLabel4" />
-                  <Supertip>
-                    <Title resid="residLabel4" />
-                    <Description resid="residToolTip" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
-                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
-                  </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <SourceLocation resid="residUnitConverterUrl4" />
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="UPrince.Button5Id1">
-                  <Label resid="residLabel5" />
-                  <Supertip>
-                    <Title resid="residLabel5" />
-                    <Description resid="residToolTip" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
-                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
-                  </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <SourceLocation resid="residUnitConverterUrl6" />
-                  </Action>
-                </Control>
-                <Control xsi:type="Button" id="UPrince.Button6Id1">
-                  <Label resid="residLabel6" />
-                  <Supertip>
-                    <Title resid="residLabel6" />
-                    <Description resid="residToolTip" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
-                    <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
-                  </Icon>
-                  <Action xsi:type="ShowTaskpane">
-                    <SourceLocation resid="residUnitConverterUrl6" />
-                  </Action>
-                </Control>
                 <Control xsi:type="Button" id="UPrince.Button7Id1">
                   <Label resid="residLabel7" />
                   <Supertip>
@@ -218,7 +173,6 @@
       </bt:Images>
       <bt:Urls>
         <bt:Url id="residDesktopFuncUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/functionfile.html">
-          <bt:Override Locale="ja-jp" Value="https://spreadsheet.uprince.com/addin/home/functionfile.html" />
         </bt:Url>
         <bt:Url id="residUnitConverterUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html">
         </bt:Url>
