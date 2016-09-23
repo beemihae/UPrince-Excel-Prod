@@ -74,7 +74,6 @@
             });
             event.completed();
         }
-
         function isNull(param) {
             if (param == null) return '';
             else return param;
@@ -222,6 +221,8 @@
         function dailyLogGET() {
             localStorage.setItem("dailyLog", "false")
             deleteTable("DailyLog");
+            getDailyLog();
+
             var projectId = localStorage.getItem('projectId');
             var userEmail = localStorage.getItem('email');
             var urlProject = host + "/api/DailyLog/GetDailyLog";
@@ -319,7 +320,7 @@
                             //matrix[i][10] = 'hello';
                             storeLineDaily(matrix[i]);
                             //GTD > excel > Hyperlink
-                            matrix[i][2] = '=HYPERLINK("https://start.uprince.com/Home/Index/gdt/daily-log/description/"&[@Column1],[@Column1])'
+                            matrix[i][2] = '=HYPERLINK("https://start.uprince.com/Home/Index/gdt/daily-log/description/"&[@ID],[@ID])'
 
                             //app.showNotification(matrix[i].toString())
                             //matrix[i][6] = isNull(str[i].Version);
@@ -344,7 +345,6 @@
                              showMessage(JSON.stringify(error));
                          });
                     });
-                    getDailyLog(str.dailyLogListViewModel[1].identifier);
 
 
                 });
@@ -356,49 +356,27 @@
             range.values = row;
         };
 
-        function getDailyLog(dailyLogId) {
+        function getDailyLog() {
             deleteValues();
-            var urlProject = host + '/api/DailyLog/GetDailyLog?logId=' + dailyLogId + '&email=' + localStorage.getItem("email");
-            $.ajax({
-                type: 'GET',
-                url: urlProject,
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+            userInvolvedPersonList();
+            getProjectList();
+            getDailyLogContextList()
+            Excel.run(function (ctx) {
+                var status = [["Inbox"], ["Next Action"], ["Waiting For"], ["Scheduled"], ["Someday"], ["Done"]];
+                addValues("C2:C" + (status.length + 1), status, ctx);
+                var type = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]];
+                addValues("E2:E" + (type.length + 1), type, ctx);
+                var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"], ["-"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                addValues("F2:F" + (time.length + 1), time, ctx);
+                var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"], ["-"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
+                addValues("G2:G" + (energy.length + 1), energy, ctx);
+                return ctx.sync().then(function () {
+                    //console.log("Success! Insert range in A1:C3.");
+                });
+            }).catch(function (error) {
+                //app.showNotification(error);
+            });
 
-            })
-             .done(function (str) {
-                 //app.showNotification(str.impact[0].State);
-                 if (Object.keys(str.personnelContacts).length != 0) {
-                     userInvolvedPersonList();
-                 }
-                 if (Object.keys(str.contextList).length != 0) {
-                     //ctx.workbook.worksheets.getItem('Values').getRange("G1:G" + Object.keys(str.contextList).length).values = dailyLogContext(str);
-                     getDailyLogContextList();
-                 }
-                 if (Object.keys(str.project).length != 0) {
-                     getProjectList();
-                 }
-                 Excel.run(function (ctx) {
-                     //var matrix = riskValuesImpact(str);
-
-                     var status = [["Inbox"], ["Next Action"], ["Waiting For"], ["Scheduled"], ["Someday"], ["Done"]];
-                     addValues("C2:C" + (status.length + 1), status, ctx);
-                     var type = [["Problem"], ["Action"], ["Event"], ["Comment"], ["Decision"], ["Reference"]];
-                     addValues("E2:E" + (type.length + 1), type, ctx);
-                     var time = [["5 min"], ["15 min"], ["30 min"], ["1 hr"], ["2 hr"], ["4 hr"], ["8 hr"], ["-"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
-                     addValues("F2:F" + (time.length + 1), time, ctx);
-                     var energy = [["Mild"], ["Reasonable"], ["Demanding"], ["Very Demanding"], ["Extreme"], ["-"]]/*[[1], [2], [1], [2], [1]] //str.impact[0].State*/;
-                     addValues("G2:G" + (energy.length + 1), energy, ctx);
-
-
-
-                     return ctx.sync().then(function () {
-                         //console.log("Success! Insert range in A1:C3.");
-                     });
-                 }).catch(function (error) {
-                     //app.showNotification(error);
-                 });
-             })
         };
 
         function userInvolvedPersonList() {
@@ -431,7 +409,7 @@
                      };
                      val[i][0] = responsible;
                      localStorage.setItem('dailyLogUsers' + responsible, "" + str[i].id);
-
+                     localStorage.setItem('dailyLogUsersTeam' + responsible, "" + str[i].isTeamMember)
                  }
                  Excel.run(function (ctx) {
                      addValues("D2:D" + (val.length + 1), val, ctx);
@@ -665,7 +643,8 @@
                     "responsible": localStorage.getItem('dailyLogUsers' + line.values[0][6]),
                     "responseStatus": isResponseStatus(line.values[0][5]),
                     "targetDate": formatDate3(line.values[0][4]),
-                    "time": isTime(line.values[0][8])
+                    "time": isTime(line.values[0][8]),
+                    "isResponsibleTeamMember": truefalse(localStorage.getItem('dailyLogUsersTeam' + line.values[0][6]))
                 };
                 $.ajax({
                     type: "POST",
@@ -676,6 +655,11 @@
                 });
             })
         };
+        function truefalse(value) {
+            if (value == 'true') return true;
+            else if (value == 'false') return false;
+            else return null;
+        }
 
         function commitUpdateDaily(line) {
             //app.showNotification(line.values[0].toString());
@@ -704,7 +688,8 @@
                 "responsible": localStorage.getItem('dailyLogUsers' + line.values[0][6]),
                 "responseStatus": isResponseStatus(line.values[0][5]),
                 "targetDate": formatDate3(line.values[0][4]),
-                "time": isTime(line.values[0][8])
+                "time": isTime(line.values[0][8]),
+                "isResponsibleTeamMember": truefalse(localStorage.getItem('dailyLogUsersTeam' + line.values[0][6]))
             };
             //app.showNotification(line.values[0][4]);
             //line.values[0][4] = "";
@@ -744,6 +729,7 @@
                 return false
             };
         }
+
 
     </script>
 </head>

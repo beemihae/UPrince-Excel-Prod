@@ -6,7 +6,7 @@
   <Id>47f4cf7c-44be-493a-82f9-5645566ddc26</Id>
 
   <!--Version. Updates from the store only get triggered if there is a version change -->
-  <Version>1.1.0.0</Version>
+  <Version>2.0.0.0</Version>
   <ProviderName>UPrince bvba</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <!-- The display name of your add-in. Used on the store and various placed of the Office UI such as the add-ins dialog -->
@@ -71,13 +71,13 @@
 
           <!--Function file is an html page that includes the javascript where functions for ExecuteAction will be called. 
             Think of the FunctionFile as the "code behind" ExecuteFunction -->
-          <FunctionFile resid="residDesktopFuncUrl" />
+          <FunctionFile resid="UPrinceExcelFuncUrl" />
 
           <!--PrimaryCommandSurface==Main Office Ribbon-->
           <ExtensionPoint xsi:type="PrimaryCommandSurface">
             <!--Use OfficeTab to extend an existing Tab. Use CustomTab to create a new tab -->
             <!-- Documentation includes all the IDs currently tested to work -->
-            <OfficeTab id="TabData">
+            <OfficeTab id="TabHome">
               <!--Group. Ensure you provide a unique id. Recommendation for any IDs is to namespace using your companyname-->
               <Group id="UPrince.Tab1.Group1">
 
@@ -99,11 +99,11 @@
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="32" resid="UPrince.Login.Icon.32" />
                     <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                   </Icon>
                   <Action xsi:type="ShowTaskpane">
-                    <SourceLocation resid="residUnitConverterUrl" />
+                    <SourceLocation resid="UPrinceExcelUrl" />
                   </Action>
                 </Control>
                 <Control xsi:type="Button" id="UPrince.Button2Id1">
@@ -114,7 +114,7 @@
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="32" resid="UPrince.Refresh.Icon.32" />
                     <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
@@ -129,7 +129,7 @@
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="32" resid="UPrince.Publish.Icon.32" />
                     <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
@@ -144,7 +144,7 @@
                   </Supertip>
                   <Icon>
                     <bt:Image size="16" resid="UPrince.TaskpaneButton.Icon.16" />
-                    <bt:Image size="32" resid="UPrince.TaskpaneButton.Icon.32" />
+                    <bt:Image size="32" resid="UPrince.Logout.Icon.32" />
                     <bt:Image size="80" resid="UPrince.TaskpaneButton.Icon.80" />
                   </Icon>
                   <Action xsi:type="ExecuteFunction">
@@ -170,17 +170,21 @@
         <bt:Image id="UPrince.TaskpaneButton.Icon.32" DefaultValue="https://document.uprince.com/Images/ico_uprince_32.png" />
         <bt:Image id="UPrince.TaskpaneButton.Icon.80" DefaultValue="https://document.uprince.com/Images/ico_uprince_80.png" />
         <bt:Image id="UPrince.FunctionButton.Icon" DefaultValue="https://i.imgur.com/qDujiX0.png" />
+        <bt:Image id="UPrince.Login.Icon.32" DefaultValue="https://spreadsheet.uprince.com/Images/halflings-161-log-in3x.png" />
+        <bt:Image id="UPrince.Publish.Icon.32" DefaultValue="https://spreadsheet.uprince.com/Images/halflings-170-export3x.png" />
+        <bt:Image id="UPrince.Logout.Icon.32" DefaultValue="https://spreadsheet.uprince.com/Images/halflings-163-log-out3x.png" />
+        <bt:Image id="UPrince.Refresh.Icon.32" DefaultValue="https://spreadsheet.uprince.com/Images/halflings-30-repeat3x.png" />
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="residDesktopFuncUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/functionfile.html">
+        <bt:Url id="UPrinceExcelFuncUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/functionfile.html">
         </bt:Url>
-        <bt:Url id="residUnitConverterUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html">
+        <bt:Url id="UPrinceExcelUrl" DefaultValue="https://spreadsheet.uprince.com/addin/home/home.html">
         </bt:Url>
-        <bt:Url id="residUnitConverterUrl4" DefaultValue="https://spreadsheet.uprince.com/addin/home/addPerson.html">
+        <bt:Url id="UPrinceExcelUrl4" DefaultValue="https://spreadsheet.uprince.com/addin/home/addPerson.html">
         </bt:Url>
-        <bt:Url id="residUnitConverterUrl5" DefaultValue="https://spreadsheet.uprince.com/addin/home/addProject.html">
+        <bt:Url id="UPrinceExcelUrl5" DefaultValue="https://spreadsheet.uprince.com/addin/home/addProject.html">
         </bt:Url>
-        <bt:Url id="residUnitConverterUrl6" DefaultValue="https://spreadsheet.uprince.com/addin/home/addContext.html">
+        <bt:Url id="UPrinceExcelUrl6" DefaultValue="https://spreadsheet.uprince.com/addin/home/addContext.html">
         </bt:Url>
         <!--LearnMore URL currently not used -->
         <bt:Url id="UPrince.GetStarted.LearnMoreUrl" DefaultValue="https://odsample.azurewebsites.net/Pages/GetStarted.html">

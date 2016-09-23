@@ -238,6 +238,10 @@
     <Content Include="fonts\glyphicons-regular.svg" />
     <Content Include="fonts\icomoon.svg" />
     <Content Include="fonts\New folder\icomoon.svg" />
+    <Content Include="Images\halflings-161-log-in3x.png" />
+    <Content Include="Images\halflings-163-log-out3x.png" />
+    <Content Include="Images\halflings-170-export3x.png" />
+    <Content Include="Images\halflings-30-repeat3x.png" />
     <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
     <Content Include="obj\Debug\UPrince Excel ProdWeb.vbproj.GenerateResource.Cache" />
     <Content Include="obj\Debug\UPrince Excel ProdWeb.vbprojResolveAssemblyReference.cache" />
